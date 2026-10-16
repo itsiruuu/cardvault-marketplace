@@ -293,11 +293,17 @@ export default function Header({
           </div>
 
           {/* Right Action Icons (User Account & Cart) */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <div className="hidden sm:block h-6 w-px bg-white/30 mx-1"></div>
+
             <button 
-              onClick={openSupportModal}
-              title="User Account"
-              className="p-2 rounded-full hover:bg-white/15 text-white transition focus:outline-none flex items-center justify-center"
+              onClick={() => setCurrentPage('account')}
+              title="My Account"
+              className={`p-2 rounded-full transition focus:outline-none flex items-center justify-center ${
+                currentPage === 'account' 
+                  ? 'bg-white/30 text-white ring-2 ring-white/40 shadow-sm' 
+                  : 'hover:bg-white/15 text-white'
+              }`}
             >
               <User className="w-5 h-5" />
             </button>
@@ -308,11 +314,9 @@ export default function Header({
               title="View Cart"
             >
               <ShoppingCart className="w-5 h-5 group-hover:scale-110 transition-transform" />
-              {totalItemsCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-white text-blue-700 font-extrabold text-[11px] w-5 h-5 rounded-full flex items-center justify-center shadow-lg border border-blue-600">
-                  {totalItemsCount}
-                </span>
-              )}
+              <span className="absolute -top-1 -right-1 bg-white text-blue-700 font-extrabold text-[11px] w-5 h-5 rounded-full flex items-center justify-center shadow-lg border border-blue-600">
+                {totalItemsCount}
+              </span>
             </button>
 
             {/* Mobile Hamburger Menu */}
@@ -341,6 +345,13 @@ export default function Header({
               All Cards (Energy Filter)
             </button>
             <button 
+              onClick={() => { setCurrentPage('account'); setMobileMenuOpen(false); }}
+              className="block w-full text-left px-3 py-2 rounded-lg hover:bg-white/15 flex items-center justify-between text-cyan-200"
+            >
+              <span>👤 My Account</span>
+              <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded text-white">4 Tabs</span>
+            </button>
+            <button 
               onClick={() => { setCurrentPage('sets-products'); setMobileMenuOpen(false); }}
               className="block w-full text-left px-3 py-2 rounded-lg hover:bg-white/15"
             >
@@ -357,6 +368,12 @@ export default function Header({
               className="block w-full text-left px-3 py-2 rounded-lg hover:bg-white/15"
             >
               News & Articles
+            </button>
+            <button 
+              onClick={() => { setCurrentPage('404'); setMobileMenuOpen(false); }}
+              className="block w-full text-left px-3 py-2 rounded-lg hover:bg-white/15 text-slate-300"
+            >
+              404 Page (Preview)
             </button>
             <button 
               onClick={() => { setCurrentPage('cart'); setMobileMenuOpen(false); }}

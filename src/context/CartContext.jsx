@@ -4,45 +4,17 @@ import { PRODUCTS } from '../data/mockData';
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  // Pre-loaded with 3 items matching Figma design screenshot (Base Set Unlimited Booster Box, etc.)
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 'base-set-unlimited-box',
-      name: 'Base Set Unlimited Booster Box',
-      subtitle: 'Condition: Factory Sealed | Series: WotC',
-      price: 15000.00,
-      image: 'https://images.pokemontcg.io/base1/4_hires.png',
-      quantity: 1,
-      trend: '+2.4%',
-      badge: 'Rare'
-    },
-    {
-      id: 'charizard-vmax',
-      name: 'Charizard VMAX PSA 10',
-      subtitle: "Champion's Path #074/073 · PSA 10 Gem Mint",
-      price: 425.00,
-      image: 'https://images.pokemontcg.io/swsh35/74_hires.png',
-      quantity: 1,
-      trend: '+12%',
-      badge: 'Secret Rare'
-    },
-    {
-      id: 'evolving-skies-pack',
-      name: 'Evolving Skies Booster Pack',
-      subtitle: 'Factory Sealed | Series: Sword & Shield',
-      price: 11.99,
-      image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=600&q=80',
-      quantity: 2,
-      trend: '+4.1%',
-      badge: 'Popular'
-    }
-  ]);
+  // Cart starts empty; items only added when user clicks Add to Cart
+  const [cartItems, setCartItems] = useState([]);
 
   const [promoCode, setPromoCode] = useState('');
   const [discountPercent, setDiscountPercent] = useState(0);
   const [promoApplied, setPromoApplied] = useState(false);
   const [isCartDrawerOpen, setIsCartDrawerOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
+
+  // Wishlist starts empty; items only added when user clicks Wishlist/Heart button
+  const [wishlistItems, setWishlistItems] = useState([]);
 
   const showToast = (message) => {
     setToastMessage(message);
@@ -95,6 +67,31 @@ export function CartProvider({ children }) {
     setCartItems([]);
   };
 
+  const addToWishlist = (product) => {
+    setWishlistItems(prev => {
+      if (prev.find(item => item.id === product.id)) return prev;
+      return [...prev, product];
+    });
+    showToast(`Added ${product.name} to wishlist!`);
+  };
+
+  const removeFromWishlist = (id) => {
+    setWishlistItems(prev => prev.filter(item => item.id !== id));
+    showToast('Removed from wishlist');
+  };
+
+  const toggleWishlist = (product) => {
+    if (wishlistItems.find(item => item.id === product.id)) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product);
+    }
+  };
+
+  const isInWishlist = (id) => {
+    return wishlistItems.some(item => item.id === id);
+  };
+
   const applyPromo = (code) => {
     const trimmed = code.trim().toUpperCase();
     if (trimmed === 'VAULT10' || trimmed === 'POKE10' || trimmed === 'PIXEL10') {
@@ -144,6 +141,11 @@ export function CartProvider({ children }) {
         totalItemsCount,
         isCartDrawerOpen,
         setIsCartDrawerOpen,
+        wishlistItems,
+        addToWishlist,
+        removeFromWishlist,
+        toggleWishlist,
+        isInWishlist,
         toastMessage,
         showToast
       }}

@@ -23,14 +23,17 @@ export default function Footer({ setCurrentPage, openSupportModal }) {
           
           {/* Brand Info (2 Columns) */}
           <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg">
+            <button 
+              onClick={() => setCurrentPage('home')}
+              className="flex items-center space-x-2 text-left group focus:outline-none"
+            >
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
                 <span className="text-lg font-black text-white">CV</span>
               </div>
               <span className="text-xl font-black tracking-wider text-white">
                 CARD<span className="text-blue-400">VAULT</span>
               </span>
-            </div>
+            </button>
             <p className="text-sm text-slate-400 max-w-sm leading-relaxed">
               Your trusted marketplace for authentic Pokémon cards, sealed booster packs, and investment-grade PSA & CGC graded slabs.
             </p>
@@ -59,23 +62,15 @@ export default function Footer({ setCurrentPage, openSupportModal }) {
                   onClick={() => setCurrentPage('all-cards')}
                   className="hover:text-blue-400 transition"
                 >
-                  All Cards (Energy Filter)
+                  Browse Cards
                 </button>
               </li>
               <li>
                 <button 
-                  onClick={() => setCurrentPage('sets-products')}
+                  onClick={() => setCurrentPage('shop')}
                   className="hover:text-blue-400 transition"
                 >
-                  Pokémon Sets Products
-                </button>
-              </li>
-              <li>
-                <button 
-                  onClick={() => setCurrentPage('set-explorer')}
-                  className="hover:text-blue-400 transition"
-                >
-                  Card Set Explorer (151)
+                  Shop
                 </button>
               </li>
               <li>
@@ -88,10 +83,10 @@ export default function Footer({ setCurrentPage, openSupportModal }) {
               </li>
               <li>
                 <button 
-                  onClick={() => setCurrentPage('product')}
-                  className="hover:text-blue-400 transition"
+                  onClick={() => setCurrentPage('account')}
+                  className="hover:text-blue-400 text-blue-300 font-semibold transition"
                 >
-                  Charizard VMAX Tracker
+                  My Account
                 </button>
               </li>
             </ul>
@@ -152,21 +147,21 @@ export default function Footer({ setCurrentPage, openSupportModal }) {
               Stay Connected
             </h3>
             <p className="text-xs text-slate-400 mb-3">
-              Subscribe for exclusive restocks, secret sales & drops!
+              Subscribe for exclusive offers!
             </p>
             <form onSubmit={handleSubscribe} className="space-y-3">
-              <div className="flex rounded-lg overflow-hidden border border-slate-700 focus-within:border-blue-500">
+              <div className="flex rounded-lg overflow-hidden border border-slate-700 focus-within:border-blue-500 bg-slate-900/90">
                 <input 
                   type="email" 
                   value={newsletterEmail}
                   onChange={(e) => setNewsletterEmail(e.target.value)}
                   placeholder="Your email"
                   required
-                  className="bg-slate-900/90 text-white text-xs px-3 py-2.5 w-full focus:outline-none placeholder-slate-500"
+                  className="bg-transparent text-white text-xs px-3 py-2.5 w-full focus:outline-none placeholder-slate-500"
                 />
                 <button 
                   type="submit"
-                  className="bg-blue-600 hover:bg-blue-500 text-white px-3 py-2.5 text-xs font-bold transition flex items-center justify-center"
+                  className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2.5 text-xs font-bold transition flex items-center justify-center active:scale-95"
                 >
                   Join
                 </button>
@@ -178,7 +173,7 @@ export default function Footer({ setCurrentPage, openSupportModal }) {
               )}
             </form>
 
-            {/* Social Icons (SVG) */}
+            {/* Social Icons */}
             <div className="flex items-center space-x-3 pt-4 text-slate-400">
               <a href="#facebook" className="p-2 rounded-lg bg-slate-900 hover:bg-blue-600 hover:text-white transition" aria-label="Facebook">
                 <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
@@ -204,24 +199,24 @@ export default function Footer({ setCurrentPage, openSupportModal }) {
           </div>
         </div>
 
-        {/* Bottom Bar: Copyright & Payment Badges */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        {/* Bottom Bar: Copyright & Payment Badges (White cards matching design) */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
           <div>
             © 2026 CARDVAULT. All rights reserved.
           </div>
           
           <div className="flex items-center space-x-2">
-            <span className="text-[11px] mr-1 text-slate-400">We Accept:</span>
-            <span className="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-bold text-slate-300 border border-slate-700">
+            <span className="text-[11px] mr-1 text-slate-400 font-medium">We Accept:</span>
+            <span className="px-2 py-0.5 rounded bg-white text-[10px] font-bold text-slate-900 shadow-sm border border-slate-200">
               VISA
             </span>
-            <span className="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-bold text-slate-300 border border-slate-700">
+            <span className="px-2 py-0.5 rounded bg-white text-[10px] font-bold text-slate-900 shadow-sm border border-slate-200">
               MasterCard
             </span>
-            <span className="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-bold text-slate-300 border border-slate-700">
+            <span className="px-2 py-0.5 rounded bg-white text-[10px] font-bold text-slate-900 shadow-sm border border-slate-200">
               PayPal
             </span>
-            <span className="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-bold text-slate-300 border border-slate-700">
+            <span className="px-2 py-0.5 rounded bg-white text-[10px] font-bold text-slate-900 shadow-sm border border-slate-200">
               Amex
             </span>
           </div>

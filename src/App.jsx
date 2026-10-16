@@ -12,12 +12,15 @@ import SearchResultsPage from './pages/SearchResultsPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
+import AccountPage from './pages/AccountPage';
+import NotFoundPage from './pages/NotFoundPage';
 import SupportModal from './components/SupportModal';
 import SellModal from './components/SellModal';
 import { PRODUCTS } from './data/mockData';
 
 function AppContent() {
   const [currentPage, setCurrentPage] = useState('home');
+  const [accountTab, setAccountTab] = useState('profile');
   const [selectedProduct, setSelectedProduct] = useState(PRODUCTS[0]);
   const [searchQuery, setSearchQuery] = useState('Pikachu');
   const [isSupportOpen, setIsSupportOpen] = useState(false);
@@ -38,6 +41,29 @@ function AppContent() {
     setSearchQuery(query || 'Pikachu');
     setCurrentPage('search-results');
   };
+
+  const handleNavigateToAccount = (tab = 'profile') => {
+    setAccountTab(tab);
+    setCurrentPage('account');
+  };
+
+  // Known pages list to safely detect 404
+  const knownPages = [
+    'home',
+    'all-cards',
+    'sets-products',
+    'set-explorer',
+    'news',
+    'search-results',
+    'shop',
+    'product',
+    'cart',
+    'checkout',
+    'account',
+    '404'
+  ];
+
+  const isUnknownPage = !knownPages.includes(currentPage);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F8FAFC] text-[#0F172A] font-sans antialiased selection:bg-blue-600 selection:text-white">
@@ -61,7 +87,7 @@ function AppContent() {
         onPerformSearch={handlePerformSearch}
       />
 
-      {/* Dynamic Page Routing for All Figma Frames */}
+      {/* Dynamic Page Routing */}
       <main className="flex-1">
         {currentPage === 'home' && (
           <HomePage
@@ -128,6 +154,20 @@ function AppContent() {
           <CheckoutPage
             setCurrentPage={setCurrentPage}
             onOrderSuccess={() => {}}
+          />
+        )}
+
+        {currentPage === 'account' && (
+          <AccountPage
+            setCurrentPage={setCurrentPage}
+            initialTab={accountTab}
+          />
+        )}
+
+        {(currentPage === '404' || isUnknownPage) && (
+          <NotFoundPage
+            setCurrentPage={setCurrentPage}
+            onPerformSearch={handlePerformSearch}
           />
         )}
       </main>
